@@ -21,7 +21,7 @@ public class BinarySearchTree {
         stdout("---------------------------------");
     }
 
-    private static void insertNodes(TreeNode root) {
+     static void insertNodes(TreeNode root) {
         insertNode(root, new TreeNode(20));
         insertNode(root, new TreeNode(61));
         insertNode(root, new TreeNode(65));
@@ -40,7 +40,7 @@ public class BinarySearchTree {
      * @param root
      * @param child
      */
-    private static void insertNode(TreeNode root, TreeNode child) {
+    static void insertNode(TreeNode root, TreeNode child) {
         if (child == null) return;
 
         if (child.value >= root.value) {
@@ -66,7 +66,7 @@ public class BinarySearchTree {
      * Prints the tree like so "Node: 45 Left: 34 Right: 44"
      * @param root the root or top node in the tree
      */
-    private static void printTree(TreeNode root) {
+     static void printTree(TreeNode root) {
         if (root == null) return;
 
         if (root.left != null || root.right != null) stdout("Node Value: " + root.value);
