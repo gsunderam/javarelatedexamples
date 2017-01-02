@@ -15,6 +15,7 @@ public class ArrayPuzzlers {
         printNonDuplicatesNoSort();
 
         printDistinct(); //prints all distinct ones
+        printLeaders();
     }
 
     /**
@@ -85,5 +86,23 @@ public class ArrayPuzzlers {
         stdout("Time taken to print via For Loop: " + (System.nanoTime() - begin));
 
         stdout("\nTime Taken via Set to print distinct: " + (System.nanoTime() - start - printTime));
+    }
+
+    /**
+     * An element is leader if it is greater than all the elements to its right side. The rightmost element is always a leader.
+     * REF: https://www.tuturself.com/posts/view?menuId=82&postId=943&src=linkedin
+     */
+    private static void printLeaders() {
+        // Leaders are- 55 34 15 9 2 -> should be the output
+        int a [] = {55, 10, 34, 5, 15, 9, 2};
+        printTab(a[a.length - 1]);
+
+        int big = a[a.length - 1];
+        for (int i = a.length - 1; i >= 1; i--) {
+            if (a[i - 1] > big) {
+                printTab(a[i - 1]);
+                big = a[i -1];
+            }
+        }
     }
 }
