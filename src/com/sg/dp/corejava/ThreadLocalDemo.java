@@ -27,7 +27,8 @@ class ThreadLocalDemo {
 class MyThread extends Thread {
    //Atomic variable is needed instead of synchronization here
    private static AtomicInteger threadId = new AtomicInteger(100);
-   
+
+   //always static - ThreadLocals
    private static ThreadLocal<Integer> tl = ThreadLocal.withInitial(() -> {
 	   /* Called for each thread */
 	   int id = threadId.getAndIncrement();

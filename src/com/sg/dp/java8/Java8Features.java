@@ -64,7 +64,9 @@ public class Java8Features {
 
         //Joining is another nifty utility to join items using a delimiter such as String
         stdout(names.stream().map(String::toUpperCase).collect(Collectors.joining(", ")));
+        //call the static method as if it were a class
         stdout(Util.getNoOfProcessors());
+
         SeaPlane plane = new SeaPlane();
         plane.takeOff();plane.cruise();plane.turn();plane.land();
     }

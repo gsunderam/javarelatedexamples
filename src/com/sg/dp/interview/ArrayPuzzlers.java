@@ -3,8 +3,10 @@ package com.sg.dp.interview;
 import com.sg.dp.log.Logger;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 import static com.sg.dp.log.Logger.*;
+import static java.lang.StrictMath.sqrt;
 
 /**
  * Created by chandrashekar on 11/9/2016.
@@ -16,6 +18,21 @@ public class ArrayPuzzlers {
 
         printDistinct(); //prints all distinct ones
         printLeaders();
+
+        printPrimes(75);
+    }
+
+    private static void printPrimes(int n) {
+        if (n < 2) return;
+
+        stdout("Primes till " + n + " are ");
+        printTab(2); //one knows 2 is prime. Then filter all even numbers upfront
+        IntStream.rangeClosed(3, n).filter(i -> i % 2 != 0).forEach(i -> isPrime(i));
+    }
+
+    private static void isPrime(int n) {
+        long count = IntStream.rangeClosed(3, (int) sqrt(n)).filter(k -> n % k == 0).limit(1).count();
+        if (count == 0) printTab(n);
     }
 
     /**
@@ -30,7 +47,7 @@ public class ArrayPuzzlers {
 
         for (int i = 0; i < a.length - 1; i++) {
             if (a[i] != a[i + 1] && a[i] != temp) {
-                 print(a[i] + "\t");
+                print(a[i] + "\t");
 
                 //Print the last element
                 if (i + 1 == a.length -1) print(a[i + 1]);
@@ -95,7 +112,7 @@ public class ArrayPuzzlers {
     private static void printLeaders() {
         // Leaders are- 55 34 15 9 2 -> should be the output
         int a [] = {55, 10, 34, 5, 15, 9, 2};
-        printTab(a[a.length - 1]);
+        printTab("Leaders are " + a[a.length - 1]);
 
         int big = a[a.length - 1];
         for (int i = a.length - 1; i >= 1; i--) {
@@ -104,5 +121,19 @@ public class ArrayPuzzlers {
                 big = a[i -1];
             }
         }
+        stdout("\n");
     }
+
+//    private static void isPrimePreJava8(int n) {
+//        boolean primeFlag = true;
+//
+//        for (int k = 3; k <= sqrt(n); k++) {
+//            if (n % k == 0) {
+//                primeFlag = false;
+//                break;
+//            }
+//        }
+//
+//        if (primeFlag) printTab(n);
+//    }
 }
