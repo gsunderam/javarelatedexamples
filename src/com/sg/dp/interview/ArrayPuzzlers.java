@@ -13,14 +13,14 @@ import static java.lang.StrictMath.sqrt;
  */
 public class ArrayPuzzlers {
     public static void main(String[] args) {
-//        printNonDuplicates(); //These two removes duplicates
-//        printNonDuplicatesNoSort();
-//
-//        printDistinct(); //prints all distinct ones
-//        printLeaders();
-//
-//        printPrimes(101);
-//        printSubsets(getSubsets(Arrays.asList(1, 5, 9, 11)));
+        printNonDuplicates(); //These two removes duplicates
+        printNonDuplicatesNoSort();
+
+        printDistinct(); //prints all distinct ones
+        printLeaders();
+
+        printPrimes(101);
+        printSubsets(getSubsets(Arrays.asList(1, 5, 9, 11)));
         printNonDupesBetweenArrays();
     }
 
