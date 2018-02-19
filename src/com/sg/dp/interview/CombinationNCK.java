@@ -49,7 +49,7 @@ public class CombinationNCK {
                 }
             }
         }
-
+        stdout("test");
         for (List<Integer> result : resultList) stdout(result);
     }
 }
