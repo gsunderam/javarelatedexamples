@@ -33,22 +33,23 @@ public class CombinationNCK {
         }
 
         for (List<Integer> list : nodes) {
-//            while(true) {
-                for (int i : numberList) {
-                    List<Integer> temp = new ArrayList<>();
-                    temp.addAll(list);
-                    if (!temp.contains(i)) {
-                        temp.add(i);
-                        resultList.add(temp);
+            for (int i : numberList) {
+                List<Integer> temp = new ArrayList<>();
+                temp.addAll(list);
+                if (!temp.contains(i)) {
+                    temp.add(i);
+                    for (int j : numberList) {
+                        List<Integer> temp2 = new ArrayList<>();
+                        temp2.addAll(temp);
+                        if (!temp2.contains(j) && temp2.size() < 3) {
+                            temp2.add(j);
+                            resultList.add(temp2);
+                        }
                     }
                 }
-//            }
+            }
         }
 
         for (List<Integer> result : resultList) stdout(result);
-
     }
-
-
-
 }
