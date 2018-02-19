@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.sg.dp.log.Logger.stdout;
+
 /**
  * Created by chandrashekar on 1/13/2018.
  * Find permutations 4 P 3. {123}, {124}, {212} etc
@@ -21,25 +23,32 @@ public class CombinationNCK {
          * 5) Repeat the process for ALL elements in the arrayj
          */
         List<Integer> numberList = Arrays.asList(numbers);
-        for (int i = 0; i < numberList.size(); i++) {
-            List<Integer> first = new ArrayList<>();
-            first.add(i);
-            List<Integer> sublist = formSubListExcept(first);
-            List<List<Integer>> firstLevelLists = combine(i, sublist);
-            for (List<Integer> intList : firstLevelLists) {
-                List<Integer> nextLevelList = formSubListExcept(intList);
-                //combine(intList, nextLevelList);
-            }
+        List<List<Integer>> nodes = new ArrayList<List<Integer>>();
+        List<List<Integer>> resultList = new ArrayList<List<Integer>>();
+
+        for (int i : numberList) {
+            List<Integer> temp = new ArrayList<>();
+            temp.add(i);
+            nodes.add(temp);
         }
+
+        for (List<Integer> list : nodes) {
+//            while(true) {
+                for (int i : numberList) {
+                    List<Integer> temp = new ArrayList<>();
+                    temp.addAll(list);
+                    if (!temp.contains(i)) {
+                        temp.add(i);
+                        resultList.add(temp);
+                    }
+                }
+//            }
+        }
+
+        for (List<Integer> result : resultList) stdout(result);
+
     }
 
-    private static List<List<Integer>> combine(int i, List<Integer> sublist) {
 
-        return null;
-    }
 
-    private static List<Integer> formSubListExcept(List<Integer> list) {
-
-        return list;
-    }
 }
