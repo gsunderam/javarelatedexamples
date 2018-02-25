@@ -15,6 +15,9 @@ import static com.sg.dp.log.Logger.stdout;
  */
 public class NCKGeneric {
     private static final List<List<Integer>> resultList = new ArrayList<>();
+
+    private static int k;
+    private static List<Integer> numbers;
     /**
      * 1) Take first element 1
      * 2) take sublist of remaning [234...]
@@ -23,21 +26,24 @@ public class NCKGeneric {
      * 5) Repeat the process for ALL elements in the array until k is reached
      */
     public static void findNCK(int k, Integer [] numbers) {
+        NCKGeneric.k = k;
+        NCKGeneric.numbers = Arrays.asList(numbers);;
+
         List<Integer> numberList = Arrays.asList(numbers);
         List<List<Integer>> nodes = new ArrayList<>();
 
-        for (int i : numberList) {
+        numberList.stream().forEach(i -> {
             List<Integer> temp = new ArrayList<>();
             temp.add(i);
             nodes.add(temp);
-        }
+        });
 
-        getPermutations(nodes, numberList, k);
+        getPermutations(nodes);
     }
 
-    public static void getPermutations(List<List<Integer>> nodes, List<Integer> numberList, int k) {
-        for (List<Integer> list : nodes) {
-            for (int i : numberList) {
+    public static void getPermutations(List<List<Integer>> nodes) {
+        nodes.stream().forEach(list -> {
+            numbers.stream().forEach(i -> {
                 List<Integer> temp = new ArrayList<>();
                 temp.addAll(list);
                 if (!temp.contains(i)) {
@@ -47,15 +53,15 @@ public class NCKGeneric {
                     } else {
                         List<List<Integer>> temp2 = new ArrayList<>();
                         temp2.add(temp);
-                        getPermutations(temp2, numberList, k);
+                        getPermutations(temp2);
                     }
                 }
-            }
-        }
+            });
+        });
     }
 
     public static void main(String[] args) {
-        final Integer [] numbers = {1,2,3,4,5};
+        final Integer [] numbers = {1,2,3,4};
         int noOfPermutations = 3;
         if (args.length > 0 && args[0] != null) {
             noOfPermutations = Integer.parseInt(args[0]);

@@ -21,6 +21,7 @@ public class StringManipulations {
         findLongPalindrome();
         findUnionOfArrays();
         findFirstNonRepeatedLetter();
+        findFirstNonRepeatedLetterV2();
     }
 
     private static void findFirstNonRepeatedLetter() {
@@ -119,7 +120,7 @@ public class StringManipulations {
 
     private static void findWordsCount() {
         String s = "Im for God and God men. That That is is a great place. Wonder Wonder. luck is always luck y and luck";
-        final Map<String, Integer> words = new LinkedHashMap<String, Integer>(); //to maintain order
+        final Map<String, Integer> words = new HashMap<String, Integer>();
 
         List<Map<String, Integer>> wordsCountList = Arrays.stream(s.split("\\s")).map(str -> {
             words.put(str, (words.get(str) != null ? words.get(str) + 1 : 1));
@@ -127,5 +128,23 @@ public class StringManipulations {
         }).collect(toList()); //Just to get ONLY the last element
 
         stdout(wordsCountList.get(wordsCountList.size() - 1));
+    }
+
+    /** Just uses hashmap */
+    private static void findFirstNonRepeatedLetterV2() {
+        String s = "stress"; //prints "t"
+        Map<Character, Integer> map = new HashMap<Character, Integer>(); //to maintain order
+        char [] chars = s.toCharArray();
+
+        for(char ch : chars) {
+            map.put(ch, (map.containsKey(ch) ? map.get(ch) + 1 : 1));
+        }
+
+        for (char ch : chars) {
+            if (map.get(ch) == 1) {
+                stdout("\n First Non repeated letter in the String " + s + " is \"" + ch + "\"");
+                break;
+            }
+        }
     }
 }

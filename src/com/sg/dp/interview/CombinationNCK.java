@@ -14,7 +14,7 @@ import static com.sg.dp.log.Logger.stdout;
  * Given 4 elements Print 4p3
  */
 public class CombinationNCK {
-    private static final Integer [] numbers = {1,2,3,4};
+    private static final Integer [] numbers = {1,2,3,4,5};
 
     /**
      * 1) Take first element 1

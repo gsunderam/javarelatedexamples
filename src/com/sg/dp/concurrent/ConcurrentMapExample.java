@@ -3,6 +3,8 @@ package com.sg.dp.concurrent;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.sg.dp.log.Logger.stdout;
+
 /**
  * Created by chandrashekar on 2/8/2017.
  * CHM by default uses 16 threads for lock striping. 16 threads can write to 16 different buckets
@@ -16,6 +18,13 @@ public class ConcurrentMapExample {
         premiumPhone.put("Samsung","S6");
 
         printMap(premiumPhone);
+        stdout("\n");
+
+        //Outside the function, the CHM HAS the new value added
+        Iterator iterator = premiumPhone.keySet().iterator();
+        while (iterator.hasNext()) {
+            stdout(premiumPhone.get(iterator.next()));
+        }
     }
 
     /**
@@ -26,7 +35,7 @@ public class ConcurrentMapExample {
         Iterator iterator = premiumPhone.keySet().iterator();
 
         while (iterator.hasNext()) {
-            System.out.println(premiumPhone.get(iterator.next()));
+            stdout(premiumPhone.get(iterator.next()));
             premiumPhone.put("Sony", "Xperia Z");
         }
     }

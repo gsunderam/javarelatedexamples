@@ -37,4 +37,9 @@ public class Logger {
         if (obj != null) err.println(obj.toString());
         else err.println(obj);
     }
+
+    public static void format(String format, Object... messages) {
+        if (messages != null && format != null) stdout(String.format(format, messages));
+        else if (messages == null || format == null) stdout(format + "," + messages);
+    }
 }
