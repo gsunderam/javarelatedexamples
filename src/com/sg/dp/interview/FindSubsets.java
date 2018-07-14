@@ -1,5 +1,7 @@
 package com.sg.dp.interview;
 
+import com.sg.dp.log.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,6 +12,7 @@ import static com.sg.dp.log.Logger.stdout;
 
 /**
  * Created by chandrashekar on 7/12/2018.
+ * Time complexity(O(2 ^n - 1). 2 ^ n -1 ops for all the elements
  */
 public class FindSubsets {
     public  List<List<Integer>> findSubsets(List<Integer> inputList) {
@@ -42,7 +45,6 @@ public class FindSubsets {
         List<List<Integer>> resultList = new ArrayList<>();
 
         subsets.stream().forEach(resultList::add);
-
         return concatenate(first, subsets, resultList);
     }
 
@@ -57,12 +59,13 @@ public class FindSubsets {
         return resultList;
     }
 
-    private boolean isSum16(List<Integer> list, Predicate predicate) {
-        return predicate.test(list);
+    private static boolean isSum16(List<Integer> list) {
+        return list.stream().mapToInt(Integer::intValue).sum() == 16;
     }
 
     public static void main(String[] args) {
         List<Integer> inputList = Arrays.asList(2, 4, 6, 10);
-        stdout(new FindSubsets().findSubsets(inputList));
+        List<List<Integer>> subsets = new FindSubsets().findSubsets(inputList);
+        subsets.stream().filter(FindSubsets::isSum16).forEach(Logger::stdout);
     }
 }
