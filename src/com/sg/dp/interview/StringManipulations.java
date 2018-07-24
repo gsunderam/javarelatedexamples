@@ -1,11 +1,13 @@
 package com.sg.dp.interview;
 
+import com.sg.dp.log.Logger;
+
 import java.util.*;
 import java.util.stream.Stream;
 
-import static com.sg.dp.log.Logger.stdout;
-import static com.sg.dp.log.Logger.print;
+import static com.sg.dp.log.Logger.*;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.toString;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -22,7 +24,10 @@ public class StringManipulations {
         findUnionOfArrays();
         findFirstNonRepeatedLetter();
         findFirstNonRepeatedLetterV2();
+        isPalindrome("adbda");
+        reverseString("johndoeu");
     }
+
 
     private static void findFirstNonRepeatedLetter() {
         String s = "stress"; //prints "t"
@@ -107,6 +112,14 @@ public class StringManipulations {
                 .flatMap(List::stream) //Flattens the list streams above in to one Stream i.e. [1,2], [3,4]
                 .map(i -> i + 1)       //becomes [1,2,3,4]. map here processes this flattened list
                 .forEach(i -> System.out.print(i + "\t"));
+
+        Map<String, List<String>> people = new HashMap<>();
+        people.put("John", Arrays.asList("555-1123", "555-3389"));
+        people.put("Mary", Arrays.asList("555-2243", "555-5264"));
+        people.put("Steve", Arrays.asList("555-6654", "555-3242"));
+
+        people.values().stream().flatMap(Collection::stream).forEach(Logger::printTab);
+        newline();
     }
 
     private static void findCommonElements() {
@@ -146,5 +159,31 @@ public class StringManipulations {
                 break;
             }
         }
+    }
+
+    public static boolean isPalindrome(String str) {
+        for(int i = 0, j = str.length() -1; i < j; i++, j--) {
+            if (str.charAt(i) != str.charAt(j)) {
+                stdout("String " + str + " is NOT a palindrome");
+                return false;
+            }
+        }
+
+        stdout("String " + str + " is a palindrome");
+        return true;
+    }
+
+    private static void reverseString(String str) {
+        char[] chars = str.toCharArray();
+        char temp = 'c';
+
+        for (int i = 0, j = chars.length - 1; i < j; i++, j--) {
+            temp = chars[i];
+            chars[i] = chars[j];
+            chars[j] = temp;
+        }
+
+        printTab("Reverse of " + str + " is ");
+        for(int i = 0; i < chars.length; i++) print(chars[i]);
     }
 }

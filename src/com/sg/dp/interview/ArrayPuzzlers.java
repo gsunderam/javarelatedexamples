@@ -20,7 +20,7 @@ public class ArrayPuzzlers {
         printLeaders();
 
         printPrimes(101);
-        printSubsets(getSubsets(Arrays.asList(1, 5, 9, 11)));
+//        printSubsets(getSubsets(Arrays.asList(1, 5, 9, 11)));
         printNonDupesBetweenArrays();
     }
 
@@ -67,7 +67,7 @@ public class ArrayPuzzlers {
         }
 
         print("\n");
-        stdout("Time Taken for Sort Array approach: " + (System.nanoTime() - start));
+        stdout("Time Taken for Sort Array approach: " + (System.nanoTime() - start) / 10000);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ArrayPuzzlers {
 
         for (int n: a) if (!dupes.contains(n)) printTab(n);
         print("\n");
-        stdout("Time Taken for Non Sort Nested Loop scan: " + (System.nanoTime() - start));
+        stdout("Time Taken for Non Sort Nested Loop scan: " + (System.nanoTime() - start) / 10000);
     }
 
     /**
@@ -108,13 +108,13 @@ public class ArrayPuzzlers {
         long begin = System.nanoTime();
         set.stream().forEach(Logger::printTab);
         long printTime = System.nanoTime() - begin;
-        stdout("Time taken to print va streams: " + printTime);
+        stdout("Time taken to print va streams: " + printTime/10000);
 
         begin = System.nanoTime();
         for (int n : set) printTab(n);
-        stdout("Time taken to print via For Loop: " + (System.nanoTime() - begin));
+        stdout("Time taken to print via For Loop: " + (System.nanoTime() - begin)/10000);
 
-        stdout("\nTime Taken via Set to print distinct: " + (System.nanoTime() - start - printTime));
+        stdout("\nTime Taken via Set to print distinct: " + (System.nanoTime() - start - printTime) / 10000);
     }
 
     /**
