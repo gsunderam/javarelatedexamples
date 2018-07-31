@@ -1,9 +1,14 @@
 package com.sg.dp.java8;
 
+import com.sg.dp.log.Logger;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static com.sg.dp.log.Logger.printTab;
 import static com.sg.dp.log.Logger.stdout;
 
 /**
@@ -69,5 +74,45 @@ public class Java8Features {
 
         SeaPlane plane = new SeaPlane();
         plane.takeOff();plane.cruise();plane.turn();plane.land();
+        optionalDemo();
+
+        //Lambdas can make code reusable
+        List<Integer> numbers = Arrays.asList(1,2, 3, 4, 5, 6, 7, 8, 9, 10,11);
+
+        sumAll(numbers, x -> true); //Sum all numbers
+        sumAll(numbers, x -> x % 2 == 0); //Sum all even numbers
+        sumAll(numbers, x -> x % 3 == 0); //sum multiples of 3
+        sumAll(numbers, x -> x % 3 == 0 && x % 2 != 0); //sum multiples of 3 only if x is odd
+    }
+
+    public static void optionalDemo() {
+        String [] words = new String[10];
+        Optional<String> checkNull = Optional.ofNullable(words[5]);
+
+        if (checkNull.isPresent()) System.out.print(words[5].toLowerCase());
+        else System.out.println("word is null");
+
+        stdout(checkNull.orElse(new String("default"))); //orElse
+        stdout(checkNull.orElseGet(() -> "Default Value")); //orElseGet
+
+        //Optional with a value present
+        Optional<String> name = Optional.of("SunderamG");
+        stdout(name.isPresent() ? "name is " + name.get(): "name is null"); //using .get()
+        name.ifPresent(Logger::stdout); //using lammbda style method references
+    }
+
+    /**
+     * With predicate, this code can be used for several different conditions
+     * @param numbers
+     * @param p
+     */
+    public static void sumAll(List<Integer> numbers, Predicate<Integer> p) {
+        int total = 0;
+
+        for (int number : numbers) {
+            if (p.test(number)) total += number;
+        }
+
+        printTab(total);
     }
 }

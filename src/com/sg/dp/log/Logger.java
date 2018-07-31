@@ -42,4 +42,8 @@ public class Logger {
         if (messages != null && format != null) stdout(String.format(format, messages));
         else if (messages == null || format == null) stdout(format + "," + messages);
     }
+
+    public static void newline() {
+        out.println();
+    }
 }

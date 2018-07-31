@@ -174,6 +174,7 @@ public class StringManipulations {
     }
 
     private static void reverseString(String str) {
+        long start = System.nanoTime();
         char[] chars = str.toCharArray();
         char temp = 'c';
 
@@ -183,7 +184,9 @@ public class StringManipulations {
             chars[j] = temp;
         }
 
+        stdout("Time taken for swapping: " + (System.nanoTime() - start));
+
         printTab("Reverse of " + str + " is ");
-        for(int i = 0; i < chars.length; i++) print(chars[i]);
+        print(new String(chars));
     }
 }
