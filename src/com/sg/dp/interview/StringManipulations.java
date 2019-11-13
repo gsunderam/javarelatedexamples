@@ -20,7 +20,6 @@ public class StringManipulations {
         findWordsCount();
         findCommonElements();
         testFlatMap();
-        findLongPalindrome();
         findUnionOfArrays();
         findFirstNonRepeatedLetter();
         findFirstNonRepeatedLetterV2();
@@ -64,44 +63,6 @@ public class StringManipulations {
         } else if (j == b.length) { //Vice Versa
             while(i < a.length) print(a[i++] + "\t");
         }
-    }
-
-    /** Finds longest subsstring matching content like aba, ababa, abba etc. in the given string */
-    private static void findLongPalindrome() {
-        String s = "baxdzzababa";
-        char[] charArray = s.toCharArray();
-        int len = charArray.length;
-        /** low tracks the left and high the right side of the center. maxlength is the length of the palindrome found thus far */
-        int low = 0, high = 0, start = 0, maxlength = 0; //start saves the "low" value once a palindrome is found
-
-        for(int i = 1; i < len; i++) {
-            /** This is for ODD paindromes. Compares 0 and 2 with 1 as center and proceeds to len - 1 */
-            low = i - 1; high = i + 1;
-
-            while (low >= 0 && high < len && charArray[low] == charArray[high]) {
-                if (high - low + 1 >= maxlength) {
-                    start = low;
-                    maxlength = high - low + 1;
-                }
-
-                low--; high++;
-            }
-
-            /** This is for EVEN paindromes. Compares 0 and 1, 1 and 2 etc. and proceeds to len */
-            low = i - 1; high = i;
-            while (low >= 0 && high < len && charArray[low] == charArray[high]) {
-                if (high - low + 1 >= maxlength) {
-                    start = low;
-                    maxlength = high - low + 1;
-                }
-
-                low--; high++;
-            }
-        }
-
-//        stdout("start: " + start + " length: " + maxlength);
-        stdout("Longest palindrome in the String " + s + " is ");
-        stdout(s.substring(start, start + maxlength));
     }
 
     /**
