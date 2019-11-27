@@ -24,28 +24,12 @@ public class GraphClient {
         graph.addEdge("E", "F");
         graph.addEdge("E", "C");
 
-//        List<Vertex> vertices = graph.getVertices("A");
-//        stdout("Vertices for A are -> " + vertices);
+        List<Vertex> vertices = graph.getVertices("A");
+        stdout("Vertices for A are -> " + vertices);
 
-//        graph.printGraph();
-//        print("\n");
-//        graph.traverseDFS("A");
-//        graph.traverseBFS("A");
-        test(graph);
-    }
-
-    private static void test(Graph graph) {
-        List<Vertex> verts = graph.getVertices("A");
-
-        for (Vertex vertex : verts) {
-            if (!vertex.visited) {
-                stdout("Setting " + vertex + " to true");
-                vertex.visited = true;
-            }
-        }
-
-        Set<Vertex> vertices = graph.adjacentVertices.keySet();
-        Vertex rootVtx = vertices.parallelStream().filter(v -> v.name.equalsIgnoreCase("C")).findFirst().get();
-        stdout(rootVtx.name + ":" + rootVtx.visited);
+        graph.printGraph();
+        print("\n");
+        graph.traverseDFS("A");
+        graph.traverseBFS("A");
     }
 }

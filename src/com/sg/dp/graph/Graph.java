@@ -5,21 +5,21 @@ import java.util.*;
 import static com.sg.dp.log.Logger.*;
 
 public class Graph {
-     Map<Vertex, List<Vertex>> adjacentVertices = new LinkedHashMap<>();
+    Map<Vertex, List<Vertex>> adjacentVertices = new LinkedHashMap<>();
 
     public void addVertex(String name) {
-        adjacentVertices.putIfAbsent(new Vertex(name), new ArrayList<>());
+        adjacentVertices.putIfAbsent(Flyweight.getVertex(name), new ArrayList<>());
     }
 
     public void addEdge(String src, String dest) {
-        Vertex source = new Vertex(src);
-        Vertex destination = new Vertex(dest);
+        Vertex source = Flyweight.getVertex(src);
+        Vertex destination = Flyweight.getVertex(dest);
         adjacentVertices.get(source).add(destination);
         adjacentVertices.get(destination).add(source);
     }
 
     public List<Vertex> getVertices(String name) {
-        return adjacentVertices.get(new Vertex(name));
+        return adjacentVertices.get(Flyweight.getVertex(name));
     }
 
     public Vertex getVertex(String key) {
@@ -66,10 +66,7 @@ public class Graph {
             List<Vertex> vertices = adjacentVertices.get(rootVertex);
 
             for (Vertex vertex : vertices) {
-                if (!vertex.visited) {
-                    stack.push(vertex.name);
-                    vertex.visited = true;
-                }
+                if (!vertex.visited)  stack.push(vertex.name);
             }
         }
 
