@@ -31,5 +31,6 @@ public class GraphClient {
         print("\n");
         graph.traverseDFS("A");
         graph.traverseBFS("A");
+        graph.printPath("D", "E", new StringBuilder(""));
     }
 }

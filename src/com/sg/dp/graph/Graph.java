@@ -99,4 +99,28 @@ public class Graph {
 
         print("\n");
     }
+
+    /**
+     * Print the path between nodes (inclusive)
+     * @param start
+     * @param end
+     */
+    public void printPath(String start, String end, StringBuilder path) {
+        if (start.equalsIgnoreCase(end)) {
+            stdout("Path is " + path.toString());
+            return;
+        }
+
+        if (!path.toString().contains(start)) path.append(start).append("-");
+
+        List<Vertex> vertices = getVertices(start);
+
+        for (Vertex v: vertices) {
+            if (!path.toString().contains(v.name)) {
+                path.append(v.name).append("-");
+                printPath(v.name, end, path);
+                return;
+            }
+        }
+    }
 }
