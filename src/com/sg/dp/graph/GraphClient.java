@@ -25,12 +25,14 @@ public class GraphClient {
 
 //        Map<Vertex, Integer> vertices = graph.getVertices("A");
 //        stdout("Vertices for A are -> " + vertices);
-
+        stdout(graph.isVertexOfEachOther("A", "F"));
         GraphOps.printGraph(graph);
         print("\n");
         GraphOps.traverseDFS("A", graph);
         GraphOps.traverseBFS("A", graph);
         GraphOps.printPath(graph,"D", "E", new StringBuilder(""));
-        DijkstraAlgorithm.printShortestPath(graph, "A", "E");
+        stdout("AB: " + graph.getEdgeLength("A", "B"));
+        DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph, "C", "B");
+        dijkstra.printShortestPath();
     }
 }

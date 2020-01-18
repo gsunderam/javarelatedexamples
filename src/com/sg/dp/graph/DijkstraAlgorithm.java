@@ -3,14 +3,28 @@ package com.sg.dp.graph;
 import java.util.*;
 import static com.sg.dp.log.Logger.stdout;
 
-public class DijkstraAlgorithm {
+/**
+ * Java based implementation of the Dijkstra Algorithm using priority queue
+ * TODO: Further optimization needed. streamlining
+ */
+public final class DijkstraAlgorithm {
     private static final int INITIAL_WEIGHT = 100000;
+    private transient final Graph graph;
+    private transient final String start, end;
+    private Queue<VertexWeight> queue = new PriorityQueue<>();
 
-    public static void printShortestPath(Graph graph, String start, String end) {
-        Queue<VertexWeight> queue =  new PriorityQueue<>();
-        initializeQueue(graph, start, queue);
+    public DijkstraAlgorithm(Graph graph, String start, String end) {
+        this.graph = graph;
+        this.start = start;
+        this.end = end;
+    }
+
+    public void printShortestPath() {
+        queue = new PriorityQueue<>();
+        initializeQueue();
         Set<String> visited = new HashSet<>();
-        StringBuilder journey = new StringBuilder(start + "-");
+        List<String> journey = new ArrayList();
+        journey.add(start);
         visited.add(start);
         stdout("Processing node " + start);
         String currentNode = "";
@@ -21,18 +35,17 @@ public class DijkstraAlgorithm {
             stdout("Vertices of " + vtxWgt.name);
 
             Map<Vertex, Integer> adjVerts = graph.getVertices(vtxWgt.name);
-            for(Map.Entry<Vertex, Integer> edgeWeights : adjVerts.entrySet()) {
+            for (Map.Entry<Vertex, Integer> edgeWeights : adjVerts.entrySet()) {
                 if (!visited.contains(edgeWeights.getKey().name)) {
                     currentNode = edgeWeights.getKey().name;
                     visited.add(currentNode);
                     stdout("Processing node " + currentNode);
-//                  getQueueElement(queue, edgeWeights.getKey());
                     VertexWeight queueEl = Flyweight.getVertexWeight(edgeWeights.getKey().name);
                     if (queueEl.weight > edgeWeights.getValue() + vtxWgt.weight) {
                         queue.remove(queueEl);
                         newDistance = edgeWeights.getValue() + vtxWgt.weight;
                         queue.offer(Flyweight.getVertexWeight(edgeWeights.getKey().name, newDistance));
-                        journey.append(currentNode).append("-");
+                        journey.add(currentNode);
                         if (currentNode.equalsIgnoreCase(end)) break;
                     }
                 }
@@ -41,26 +54,40 @@ public class DijkstraAlgorithm {
 
         stdout("Min distance: " + newDistance);
         stdout(queue);
-        stdout("Nodes visited: " + visited);
-        stdout("Journey in the Graph: " + journey.toString());
+//        stdout("Nodes visited: " + visited);
+        stdout("Journey in the Graph: " + journey);
+        determineTravelPath(journey);
     }
 
-    private VertexWeight getQueueElement(Queue<VertexWeight> queue, Vertex key) {
-        Optional<VertexWeight> queueElement = queue.parallelStream().filter(vertexWeight -> vertexWeight.name.equalsIgnoreCase(key.name)).findFirst();
-        if (queueElement.isPresent()) {
-            VertexWeight element = queueElement.get();
-//            stdout("Returning Queue element " + element);
-            return element;
-        } else {
-            stdout("Returning null for " + key.name);
+    private void determineTravelPath(List<String> journey) {
+        StringBuilder travelPath = new StringBuilder();
+        travelPath.append(end);
+        Collections.reverse(journey);
+//        stdout(journey);
+        String source, dest;
+        Map<String, Integer> legLengths = new LinkedHashMap<>();
+
+        int i = 0, j = 1;
+        while (j <= journey.size() - 1) {
+            source = journey.get(i);
+            dest = journey.get(j);
+            if (graph.isVertexOfEachOther(source, dest)) {
+                i = j;
+                travelPath.append(dest);
+                legLengths.put(dest + source, graph.getEdgeLength(source, dest));
+            }
+
+            j++;
         }
 
-        return null;
+        stdout(String.format("Travel path = %s", travelPath.reverse().toString()));
+//        stdout(legLengths);
+        showGPSPath(legLengths);
     }
 
-    private static void initializeQueue(Graph graph, String start, Queue<VertexWeight> queue) {
+    private void initializeQueue() {
         Set<Vertex> allVertices = graph.adjacentVertices.keySet();
-        for (Vertex vertex: allVertices) {
+        for (Vertex vertex : allVertices) {
             if (vertex.name.equalsIgnoreCase(start)) {
                 queue.add(Flyweight.getVertexWeight(start, 0));
             } else {
@@ -68,5 +95,12 @@ public class DijkstraAlgorithm {
             }
         }
 
+    }
+
+    private void showGPSPath(Map<String, Integer> legLengths) {
+        List<String> towns = new ArrayList<>(legLengths.keySet());
+        for(int i = towns.size()-1; i >= 0; i--) {
+            stdout(String.format("Distance (%s) = %d", towns.get(i), legLengths.get(towns.get(i))));
+        }
     }
 }
