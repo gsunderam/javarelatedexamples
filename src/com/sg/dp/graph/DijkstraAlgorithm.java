@@ -64,17 +64,17 @@ public final class DijkstraAlgorithm {
         travelPath.append(end);
         Collections.reverse(journey);
 //        stdout(journey);
-        String source, dest;
+        String dest, source;
         Map<String, Integer> legLengths = new LinkedHashMap<>();
 
         int i = 0, j = 1;
         while (j <= journey.size() - 1) {
-            source = journey.get(i);
-            dest = journey.get(j);
-            if (graph.isVertexOfEachOther(source, dest)) {
+            dest = journey.get(i);
+            source = journey.get(j);
+            if (graph.isVertexOfEachOther(dest, source)) {
                 i = j;
-                travelPath.append(dest);
-                legLengths.put(dest + source, graph.getEdgeLength(source, dest));
+                travelPath.append(source);
+                legLengths.put(source + dest, graph.getEdgeLength(dest, source));
             }
 
             j++;
@@ -94,7 +94,6 @@ public final class DijkstraAlgorithm {
                 queue.add(Flyweight.getVertexWeight(vertex.name, INITIAL_WEIGHT));
             }
         }
-
     }
 
     private void showGPSPath(Map<String, Integer> legLengths) {
