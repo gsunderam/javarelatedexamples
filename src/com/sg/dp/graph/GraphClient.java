@@ -32,7 +32,7 @@ public class GraphClient {
         GraphOps.traverseBFS("A", graph);
         GraphOps.printPath(graph,"D", "E", new StringBuilder(""));
         stdout("AB: " + graph.getEdgeLength("A", "B"));
-        DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph, "C", "B");
+        DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph, "A", "E");
         dijkstra.printShortestPath();
     }
 }

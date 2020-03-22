@@ -1,5 +1,11 @@
 package com.sg.dp.interview;
 
+import com.sg.dp.log.Logger;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import static com.sg.dp.log.Logger.print;
 import static com.sg.dp.log.Logger.stdout;
 
@@ -15,10 +21,18 @@ public class StringTeasers {
         stdout(ROTATION.toUpperCase() + " is rotation of " + INPUT.toUpperCase() + "? = " + isRotation);
 
         drawPyramidPattern(5);
+
         printLongPalindrome(PALIN);
         printLongPalinOptimized("adbcbcb");
         printLongPalinOptimized("adbcbbcb");
         printLongPalinOptimized("bcbbcbaxcbcbc");
+
+        printLongestString2Chars("aabbccddc");
+        printLongestString2Chars("abaabc");
+        printLongestString2Chars("abaabccbcb");
+        printLongestString2Chars("ababcbdccdd");
+        printLongestString2Chars("abbabdbdbdb");
+        printLongestString2Chars("aaaaa");
     }
 
     /**
@@ -112,5 +126,39 @@ public class StringTeasers {
 
         stdout("high: " + maxIndex + " low: " + minIndex);
         stdout(palin + ": Longest palindrome " +  palin.substring(minIndex, minIndex + maxlen));
+    }
+
+    private static void printLongestString2Chars(String input) {
+        stdout("Input is: " + input);
+        int i = 0, j = 1;
+//        List<String> results = new ArrayList<>();
+        int begin = 0, end = 0, max = 0;
+        char ch2 = input.charAt(j);
+
+        while(j < input.length()) {
+            char ch1 = input.charAt(i);
+//            stdout(String.format("i = %d, j = %d", i, j));
+            while (j < input.length() && input.charAt(i) == input.charAt(j))  j++;
+
+            if (j < input.length()) ch2 = input.charAt(j++);
+
+            while (j < input.length() && (ch2 == input.charAt(j) || ch1 == input.charAt(j))) j++;
+            stdout(String.format("i = %d, j = %d", i, j));
+            if (ch1 != ch2) {
+//                results.add(input.substring(i, j));
+                if (j - i > max) {
+                    max = j - i;
+                    begin = i;
+                    end = j;
+                }
+            }
+
+            if (j < input.length()) for (i = j - 1; input.charAt(i) == ch2; i--);
+            i += 1;
+        }
+
+//        results.stream().forEach(Logger::stdout);
+        stdout(input.substring(begin, end));
+//        results.stream().max(Comparator.comparing(String::length)).ifPresent(Logger::stdout);
     }
 }
