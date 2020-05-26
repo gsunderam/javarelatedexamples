@@ -20,7 +20,6 @@ public class ArrayPuzzlers {
         printLeaders();
 
         printPrimes(101);
-//        printSubsets(getSubsets(Arrays.asList(1, 5, 9, 11)));
         printNonDupesBetweenArrays();
     }
 
@@ -76,7 +75,7 @@ public class ArrayPuzzlers {
     private static void printNonDuplicatesNoSort() {
         int [] a = {13, 56, 56, 23, -19, 95, -19, 101, 13, -19};
         long start = System.nanoTime();
-        List<Integer> dupes = new ArrayList<Integer>();
+        List<Integer> dupes = new ArrayList<>();
 
         for (int i = 0; i < a.length; i++) {
             if (!dupes.contains(a[i])) {
@@ -135,74 +134,4 @@ public class ArrayPuzzlers {
         }
         stdout("\n");
     }
-
-    private static <T> List<List<? extends T>> getSubsets(List<? extends T> numbers) {
-        if (numbers.isEmpty()) {
-            //Needed to correctly combine the lists in the concat list method
-            List<List<? extends T>> list = new ArrayList<>();
-            list.add(Collections.emptyList());
-            return list;
-        }
-
-        T first = numbers.get(0);
-        List<? extends T> sublist = numbers.subList(1, numbers.size());
-
-        /**
-         * Get the subsets till the last but one first element and the last empty element to
-         * complete the recursion
-         **/
-        List<List<? extends T>> rest = getSubsets(sublist);
-
-        /** Pack the first element with the rest of the lists IN the sublists and return
-         * all the concatted lists in a parent/top-level list
-         **/
-        List<List<? extends T>> concatLists = concat(first, rest);
-        return insertAll(rest , concatLists);
-    }
-
-    private static <T> List<List<? extends T>> insertAll(List<List<? extends T>> rest, List<List<? extends T>> result) {
-        List<List<? extends T>> finalResultList = new ArrayList<>();
-        finalResultList.addAll(rest);
-        finalResultList.addAll(result);
-
-        return finalResultList;
-    }
-
-    /**
-     *
-     * @param first First element 11, 9 so on
-     * @param sublist empty list INSIDE a List. needed for tis program to work correctly
-     * @param <T> Integer or lower
-     * @return combined list
-     */
-    private static <T> List<List<? extends T>> concat(T first, List<List<? extends T>> sublist) {
-        List<List<? extends T>> concatLists = new ArrayList<>();
-
-        for (List<? extends T> list : sublist) {
-            List<T> copyList = new ArrayList<>();
-            copyList.add(0, first);
-            copyList.addAll(list);
-            concatLists.add(copyList);
-        }
-
-        return concatLists;
-    }
-
-    private static <T> void printSubsets(List<List<? extends T>> subsets) {
-        stdout("Subsets of [1, 5, 9, 11] are ");
-        subsets.stream().forEach(Logger::stdout);
-    }
-
-//    private static void isPrimePreJava8(int n) {
-//        boolean primeFlag = true;
-//
-//        for (int k = 3; k <= sqrt(n); k++) {
-//            if (n % k == 0) {
-//                primeFlag = false;
-//                break;
-//            }
-//        }
-//
-//        if (primeFlag) printTab(n);
-//    }
 }

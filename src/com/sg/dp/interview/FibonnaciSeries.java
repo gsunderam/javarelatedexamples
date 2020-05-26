@@ -1,5 +1,8 @@
 package com.sg.dp.interview;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import static com.sg.dp.log.Logger.stdout;
 
 /**
@@ -60,8 +63,18 @@ public class FibonnaciSeries {
     public static void main(String[] args) {
         int n = 40;
         memo = new long[n + 1];
-        stdout(new FibonnaciSeries().fibonnaci(n));
-        stdout(new FibonnaciSeries().fibIterative(n));
+        long start = System.nanoTime();
+        long fibRecursive = new FibonnaciSeries().fibonnaci(n);
+        long timeRecursive = System.nanoTime() - start;
+        stdout(fibRecursive);
+
+        start = System.nanoTime();
+        long fibIterative = new FibonnaciSeries().fibIterative(n);
+        long timeIterative = System.nanoTime() - start;
+        stdout(fibIterative);
+
+        stdout("Time taken for recursive alogorithn: " + timeRecursive);
+        stdout("Time taken for iterative alogorithn: " + timeIterative);
 //        stdout(Arrays.toString(memo));
     }
 }
