@@ -1,8 +1,5 @@
 package com.sg.dp.interview;
 
-import java.time.Duration;
-import java.time.Instant;
-
 import static com.sg.dp.log.Logger.stdout;
 
 /**

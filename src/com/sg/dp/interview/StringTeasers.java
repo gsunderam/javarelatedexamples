@@ -1,13 +1,7 @@
 package com.sg.dp.interview;
 
-import com.sg.dp.log.Logger;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import static com.sg.dp.log.Logger.print;
-import static com.sg.dp.log.Logger.stdout;
+import static com.sg.dp.log.Logger.*;
+import static java.lang.String.format;
 
 public class StringTeasers {
 
@@ -34,6 +28,10 @@ public class StringTeasers {
         printLongestString2Chars("abbabdbdbdb");
         printLongestString2Chars("aaaaa");
         printLongestString2Chars("abbabdbdbef");
+
+        findAnagrams("AABA", "AABABAA");
+        findAnagrams("ABCD", "CBACDBBDCA");
+        findAnagrams("TUBG", "CBACDBBDCA");
     }
 
     /**
@@ -159,5 +157,35 @@ public class StringTeasers {
         }
 
         stdout(input.substring(begin, end));
+    }
+
+    /**
+     * Find anagrams in the given string. used sliding window technique. calculate ascii value of
+     * the Anagram and compare it to the ascii value window text (0 to 3) and so on
+     * Reference: https://www.geeksforgeeks.org/anagram-substring-search-search-permutations/
+     * @param pattern Anagram string
+     * @param text Input text
+     */
+    public static void findAnagrams(String pattern, String text) {
+        stdout(format("Inputs pattern %s text %s", pattern, text));
+        int patLen = pattern.length();
+        int txtLen = text.length();
+        int patValue = 0;
+
+        patValue = getCharsValue(pattern, 0, patLen - 1);
+
+        /** Sliding window will be = (0. 3), (1,4) etc. */
+        for (int i = 0; i + patLen <= txtLen; i++) {
+            //logic here. Get ascii value and compare with patValue
+            int value = getCharsValue(text, i, i + patLen - 1);
+            if (value == patValue) stdout(format("Found anagram at index: %d", i));
+        }
+    }
+
+    private static int getCharsValue(String charArr, int start, int end) {
+        int asciiValue = 0;
+
+        for (int i = start; i <= end; i++) asciiValue += charArr.charAt(i);
+        return asciiValue;
     }
 }

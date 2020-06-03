@@ -15,6 +15,7 @@ public class StringTests {
         StringBuilder str = new StringBuilder("Hello");
         modify(str);
         stdout("String outside " + str);
+        stdout('A' + 'B');
     }
 
     /**
