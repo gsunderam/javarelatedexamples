@@ -32,6 +32,8 @@ public class StringTeasers {
         findAnagrams("AABA", "AABABAA");
         findAnagrams("ABCD", "CBACDBBDCA");
         findAnagrams("TUBG", "CBACDBBDCA");
+
+        binaryReverse("13");
     }
 
     /**
@@ -187,5 +189,28 @@ public class StringTeasers {
 
         for (int i = start; i <= end; i++) asciiValue += charArr.charAt(i);
         return asciiValue;
+    }
+
+    /** Convert the number to binary. Reverse it. Print the decimal value of reversed binary
+     * String
+     **/
+    private static void binaryReverse(String decStr) {
+        int num = Integer.parseInt(decStr);
+        StringBuilder s = new StringBuilder();
+        int sum = 0;
+
+        while (num > 0) {
+            s.append(num % 2);
+            num /= 2;
+        }
+
+        stdout(s);
+        int length = s.toString().toCharArray().length;
+        for (int i = 0; i < length; i++) {
+            int binBit = Integer.parseInt("" + s.charAt(i));
+            sum += binBit * (Math.pow(2, length - 1 - i));
+        }
+
+        stdout(sum);
     }
 }
