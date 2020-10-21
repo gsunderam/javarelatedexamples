@@ -33,6 +33,9 @@ public class SystemUtils {
         printHashCodes(str);
         printHashCodes(nullStr);
         printHashCodes(simpleData); //same for both if not overridden
+        double d = .666666666666666; //input
+        double obj = ((double) Math.round(d * 10000)) / 100; //convert to double
+        stdout(obj);
     }
 
     /**

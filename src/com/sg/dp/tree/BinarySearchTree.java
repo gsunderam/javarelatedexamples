@@ -8,6 +8,15 @@ import static com.sg.dp.log.Logger.stdout;
  * This is an implementation of the Binary Search Tree. Left < Node <= Right
  */
 public class BinarySearchTree {
+
+    public static final TreeNode CHILD_20 = new TreeNode(20);
+    public static final TreeNode CHILD_40 = new TreeNode(40);
+    public static final TreeNode CHILD_19 = new TreeNode(19);
+    public static final TreeNode CHILD_61 = new TreeNode(61);
+    public static final TreeNode CHILD_60 = new TreeNode(60);
+    public static final TreeNode CHILD_65 = new TreeNode(65);
+    public static final TreeNode CHILD_30 = new TreeNode(30);
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(51);
         insertNodes(root);
@@ -22,16 +31,16 @@ public class BinarySearchTree {
     }
 
      static void insertNodes(TreeNode root) {
-        insertNode(root, new TreeNode(20));
-        insertNode(root, new TreeNode(61));
-        insertNode(root, new TreeNode(65));
+        insertNode(root, CHILD_20);
+        insertNode(root, BinarySearchTree.CHILD_61);
+        insertNode(root, CHILD_65);
         insertNode(root, new TreeNode(52));
-        insertNode(root, new TreeNode(19));
-        insertNode(root, new TreeNode(30));
+        insertNode(root, CHILD_19);
+        insertNode(root, CHILD_30);
         insertNode(root, new TreeNode(25));
-        insertNode(root, new TreeNode(40));
-        insertNode(root, new TreeNode(51));
-        insertNode(root, new TreeNode(60));
+        insertNode(root, CHILD_40);
+//        insertNode(root, new TreeNode(51));
+        insertNode(root, CHILD_60);
         stdout("---------------------------------");
     }
 
@@ -45,7 +54,7 @@ public class BinarySearchTree {
 
         if (child.value >= root.value) {
             if (root.right == null) {
-                stdout("Inserting right node " + child.value);
+//                stdout("Inserting right node " + child.value);
                 root.right = child;
                 return;
             } else {
@@ -53,7 +62,7 @@ public class BinarySearchTree {
             }
         } else if (child.value < root.value) {
             if (root.left == null) {
-                stdout("Inserting left node " + child.value);
+//                stdout("Inserting left node " + child.value);
                 root.left = child;
                 return;
             } else {
