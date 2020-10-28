@@ -13,7 +13,7 @@ import static com.sg.dp.log.Logger.stdout;
  * Find permutations 4 P 3. {123}, {124}, {212} etc
  * Given 4 elements Print 4p3
  */
-public class CombinationNCK {
+public class NpkWays {
     private static final Integer [] numbers = {1,2,3,4,5};
 
     /**
