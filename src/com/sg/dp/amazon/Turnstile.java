@@ -11,11 +11,11 @@ import java.util.*;
 public class Turnstile {
     public int[] custTimes(int numCusts, int[] times, int[] ways) {
         Map<Integer, Integer> timeMap = new TreeMap<>();
-        int i = 0, j = 1; //Compare custs[i] and custs[j]. j is higher index
-        int time = times[0]; //Keep track of what time index a customer is done
+        int i = 0, j = 1;  // first and second indices across the loop
+        int time = times[0]; // Keep track of what time index a customer is done
 
-        int custIndex = -1; //will be i or j. Stores which cust was successful
-        int prevDir = -1; //Track the previous direction used. 0 or 1 from ways []
+        int custIndex = -1; // will be i or j, whichever is done
+        int prevDir = -1; // Track the previous direction used. 0 or 1 from ways []
 
         while (j < numCusts) {
 //            stdout("Processing main cust " + i + " comp with " + j + " time: " + time);
@@ -28,8 +28,11 @@ public class Turnstile {
              */
             if (isCollision(i, j, times, time)) {
 //                stdout("collision..");
-                if (time > 0 && times[j] == times[time - 1] + 1) prevDir = ways[custIndex];
-                else prevDir = -1;
+                if (time > 0) { /** Get the prev second which is greater of the time-1 and that index value */
+                    int prevSec = Math.max(time-1, times[time-1]);
+                    if (times[j] == prevSec + 1) prevDir = ways[custIndex];
+                    else prevDir = -1;
+                }
 
                 if (prevDir != -1) { //prev second used
                     custIndex = ways[i] == prevDir ? i : j;
@@ -37,11 +40,13 @@ public class Turnstile {
                     custIndex = ways[i] == 1 ? i : j;
                 }
 
-                if (custIndex == i) { /** Reset i and j for next run. */
-                    i = j;            /**  if j was done, just reset j to next index */
+                /** Reset i and j for next run. */
+                /**  if j was done, just reset j to next index */
+                if (custIndex == i) {
+                    i = j;
                     j++;
                 } else j = custIndex + 1;
-            } else { /** No collision, so just process lower index i, reset i & j */
+            } else {       /** No collision, so just process lower index i, reset i & j */
                 custIndex = i;
                 i = j;
                 j++;
@@ -56,13 +61,12 @@ public class Turnstile {
         }
 
         /** Last unprocessed custindex in the loop. if time cust arrived > time counter, use the former */
-        timeMap.put(i, time < times[i] ? times[i] : time);
+        timeMap.put(i, Math.max(time, times[i]));
 //        stdout(timeMap);
         return timeMap.values().stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**
-     * This occurs when 2 customers, one to enter and the other to exit, come at same second index
      * Two cases. (1) when times at i and j are some (2) when time counter equals timeAt j due to earlier
      * collisions.
      */
