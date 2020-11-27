@@ -25,7 +25,7 @@ public class NckWays {
         }
 
         int count = 0;
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) { 
             count += findWays(prefix + list.get(i), getSubList(list, i + 1, list.size()));
         }
 
