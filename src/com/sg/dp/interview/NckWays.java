@@ -10,7 +10,7 @@ import java.util.List;
  * Time Complexity : O(n square - n.k) or N! / k! (n-k)!
  */
 public class NckWays {
-    private static final String [] elements = {"4", "5", "6", "7"};
+    private static final String [] elements = {"4", "5", "6", "7", "1"};
     private List<String> numbers = Arrays.asList(elements);
     private static final int k = 3;
 
@@ -26,15 +26,10 @@ public class NckWays {
 
         int count = 0;
         for (int i = 0; i < list.size(); i++) { 
-            count += findWays(prefix + list.get(i), getSubList(list, i + 1, list.size()));
+            count += findWays(prefix + list.get(i), list.subList(i + 1, list.size()));
         }
 
         return count;
-    }
-
-    public List<String> getSubList(List<String> list, int index, int end) {
-        List<String> strings = list.subList(index, end);
-        return strings;
     }
 
     public static void main(String[] args) {
