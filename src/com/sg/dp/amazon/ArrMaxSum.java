@@ -14,8 +14,9 @@ public class ArrMaxSum {
             rsum += numbers[i];
             if (i > 0) sum = numbers[i - 1] + numbers[i];
 
-            if (sum > rsum) rsum = sum;
-            if (rsum > result) result = rsum;
+            //rsum = Math.max(numbers[i], Math.max(rsum, sum));
+            rsum = Math.max(rsum, sum);
+            result = Math.max(result, rsum);
         }
 
         return result;

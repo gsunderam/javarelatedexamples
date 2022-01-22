@@ -31,8 +31,14 @@ public class CollectionsExamples {
         deque.offerFirst(25);
         deque.offer(32);
         deque.offerLast(41);
+        Logger.stdout(deque);
+
+        deque.pollLast();
+        deque.pollFirst();
 
         Logger.stdout(deque);
+        Logger.stdout(deque.peekFirst());
+        Logger.stdout(deque.peekLast());
 
     }
 }

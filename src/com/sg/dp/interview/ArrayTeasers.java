@@ -36,9 +36,7 @@ public class ArrayTeasers {
             if (number > big) {
                 sBig = big;
                 big = number;
-            } else {
-                if (number > sBig && number < big) sBig = number;
-            }
+            } else if (number < big) sBig = Math.max(sBig, number);
         }
 
         stdout("Second largest is " + sBig);
