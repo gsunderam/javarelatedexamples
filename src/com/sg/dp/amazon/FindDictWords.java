@@ -3,7 +3,9 @@ package com.sg.dp.amazon;
 import com.sg.dp.log.Logger;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author CZ
@@ -11,7 +13,7 @@ import java.util.Map;
  */
 public class FindDictWords {
     private static final String word = "klrpodewmttt";
-    final static Map<String, Boolean> dict = new HashMap<>();
+    final static Set<String> dict = new HashSet<>();
 
     public static void main(String[] args) {
         formDict();
@@ -21,17 +23,17 @@ public class FindDictWords {
             StringBuilder subWord = new StringBuilder(word.charAt(i) + "");
             for(int j = i + 1; j < len; j++) {
                 subWord.append(word.charAt(j));
-                if (dict.get(subWord.toString()) != null) Logger.stdout(subWord.toString());
+                if (dict.contains(subWord.toString())) Logger.stdout(subWord.toString());
             }
         }
     }
 
     private static void formDict() {
-        dict.put("klr", true);
-        dict.put("pode", true);
-        dict.put("ttt", true);
-        dict.put("ewm", true);
-        dict.put("pod", true);
-        dict.put("mtt", true);
+        dict.add("klr");
+        dict.add("pode");
+        dict.add("ttt");
+        dict.add("ewm");
+        dict.add("pod");
+        dict.add("mtt");
     }
 }

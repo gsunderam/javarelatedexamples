@@ -6,13 +6,9 @@ import java.util.*;
 
 public class OptimUtiilize {
     public List<int[]> findOptimalIds(List<int[]> a, List<int[]> b, int target) {
-        Collections.sort(a, (arr1, arr2) -> {
-            return arr1[1] - arr2[1];
-        });
+        Collections.sort(a, Comparator.comparingInt(arr -> arr[1]));
 
-        Collections.sort(b, (arr1, arr2) -> {
-            return arr1[1] - arr2[1];
-        });
+        Collections.sort(b, Comparator.comparingInt(arr -> arr[1]));
 
         return getOptimalIds(a, b, target);
     }

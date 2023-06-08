@@ -15,32 +15,37 @@ import static com.sg.dp.log.Logger.stdout;
  * where n = input string length and m = pattern length
  *
  * Traditional substr search time complexity: O(mn)
+ *
+ * Fixed edge cases Mar 10 2023 2:30 PM
  */
 public class KMPSearch {
     public static void main(String[] args) {
-        String input = "abcdabeabclabsz";
+        String input = "xyxyxxyxyasxyxyxyy";
         char[] inputChars = input.toCharArray();
-        String pattern = "abclabs";
+        String pattern = "xyxyxy";
         char[] patternChars = pattern.toCharArray();
         int[] indices = formPrefixArray(pattern);
         stdout(Arrays.toString(indices));
 
-        int j = 0;
-        int index = -1;
-        for(int i = 0; i < inputChars.length; i++) {
+        int j = 0, i = 0;
+        int result = -1;
+        while (i < inputChars.length) {
             if (inputChars[i] == patternChars[j]) {
-                if (j == patternChars.length - 1) {
-                    index = i - j;
-                    j = 0;
-                }
+                j++;i++;
+            } else {
+                if (j > 0) j = indices[j - 1];
+                else i++;
+            }
 
-                j++;
-            } else j = indices[j];
+            if (j == patternChars.length - 1) {
+                result = i - j;
+                j = 0;
+            }
         }
 
-        stdout("index: " + index);
-        if (index != -1) {
-            stdout(input.substring(index, index + patternChars.length));
+        stdout("result: " + result);
+        if (result != -1) {
+            stdout(input.substring(result, result + patternChars.length));
         }
     }
 
@@ -55,16 +60,13 @@ public class KMPSearch {
         char[] chars = pattern.toCharArray();
         int i = 0, j = 1;
 
-        while (j <= pattern.length() - 1) {
+        while (j < pattern.length()) {
             if (chars[i] == chars[j]) {
                 indices[j] = i + 1;
                 j++;i++;
             } else {
                 if ( i > 0) i = indices[i - 1];
-                else {
-                    indices[j] = i;
-                    j++;
-                }
+                else j++;
             }
         }
 

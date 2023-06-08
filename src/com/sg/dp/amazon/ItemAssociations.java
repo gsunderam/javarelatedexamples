@@ -18,7 +18,7 @@ public class ItemAssociations {
             return list;
         }).collect(Collectors.toList());
 
-        return getAssocs(findLAssoc(inputList, 0));
+        return getAssocs(findLAssoc(inputList));
     }
 
     /**
@@ -26,7 +26,7 @@ public class ItemAssociations {
      * @param index List to process next
      * @return List of list strings containing the associations
      */
-    public List<List<String>> findLAssoc(List<List<String>> inputList, int index) {
+    public List<List<String>> findLAssoc(List<List<String>> inputList) {
         ArrayList<List<String>> lists = new ArrayList<>();
         lists.add(inputList.get(0));
         return combine(inputList, lists, 1);

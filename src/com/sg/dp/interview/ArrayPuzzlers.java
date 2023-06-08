@@ -21,6 +21,41 @@ public class ArrayPuzzlers {
 
         printPrimes(101);
         printNonDupesBetweenArrays();
+        groupAnagrams("cat tac dog god sat tas");
+
+        /** For GS interview prep. Compare with jump ganme and optimize */
+        getCycleLength(new int[] {1, 2, 3, 4, 1}, 0);
+        getCycleLength(new int[] {1, 2, 4, 4, 1}, 0);
+        getCycleLength(new int[] {1, 2, 0}, 0);
+        getCycleLength(new int[] {1, 2, 2, 4, 1}, 0);
+    }
+
+    private static void getCycleLength(int[] nums, int start) {
+        int i = start, count = 1;
+        int [] arr = new int[nums.length];
+        Arrays.fill(arr, -1);
+        arr[start] = 0;
+
+        while(i < nums.length) {
+            i = nums[i];
+
+            if (i < nums.length) {
+                if (arr[i] > -1) {
+                    stdout(count - arr[i]);
+                    break;
+                }
+
+                arr[i] = count++;
+            }
+        }
+
+        if (i > nums.length - 1) stdout(-1);
+    }
+
+    private static void groupAnagrams(String s) {
+        String [] words = s.split(" ");
+        Arrays.sort(words, new AnagramComparator());
+        stdout(Arrays.toString(words));
     }
 
     private static void printNonDupesBetweenArrays() {
@@ -133,5 +168,17 @@ public class ArrayPuzzlers {
             }
         }
         stdout("\n");
+    }
+
+    private static class AnagramComparator implements Comparator<String> {
+        public int compare(String a, String b) {
+            return sortChars(a).compareTo(sortChars(b));
+        }
+
+        private String sortChars(String input) {
+            char [] ch = input.toCharArray();
+            Arrays.sort(ch);
+            return new String(ch);
+        }
     }
 }

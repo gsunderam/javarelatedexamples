@@ -1,5 +1,9 @@
 package com.sg.dp.interview;
 
+import com.sg.dp.log.Logger;
+
+import java.util.Arrays;
+
 import static com.sg.dp.log.Logger.*;
 import static java.lang.String.format;
 
@@ -33,6 +37,7 @@ public class StringTeasers {
         findAnagrams("ABCD", "CBACDBBDCA");
         findAnagrams("TUBG", "CBACDBBDCA");
 
+        findLongestUniqueString("reallylongstringsuccess");
         binaryReverse("13");
     }
 
@@ -212,5 +217,30 @@ public class StringTeasers {
         }
 
         stdout(sum);
+    }
+
+    private static void findLongestUniqueString(String input) {
+        int [] alphas = new int[256];
+        char [] chars = input.toCharArray();
+        Arrays.fill(alphas, -1);
+
+        int i = 0, prev = 0, max = Integer.MIN_VALUE;
+        int [] result = new int[2];
+        for(char ch : chars) {
+            if (alphas[ch] > -1) {
+                prev = alphas[ch] + 1 > prev ? alphas[ch] + 1 : prev;
+            }
+
+           if (i - prev > max) {
+               result[0] = prev;
+               result[1] = i;
+               max = i - prev;
+           }
+
+           alphas[ch] = i;
+           i++;
+        }
+
+        stdout(input.substring(result[0], result[1] + 1));
     }
 }

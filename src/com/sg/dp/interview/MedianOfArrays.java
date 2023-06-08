@@ -1,13 +1,15 @@
 package com.sg.dp.interview;
 
+import java.util.Arrays;
+
 import static com.sg.dp.log.Logger.stdout;
 
 /**
  * Created by chandrashekar on 11/25/2018.
  */
 public class MedianOfArrays {
-    private static final int [] a = {1, 3, 5, 7, 12, 15, 17, 21, 23, 33, 45, 47, 48, 51, 54, 55, 100};
-    private static final int [] b = {2, 4, 6, 8, 11, 14, 16, 24, 25, 29, 32, 46, 49, 53, 56, 59, 65};//, 44, 55, 66, 200};
+    private static final int [] a = {1, 3, 5, 7};
+    private static final int [] b = {8, 11, 14, 16, 24, 25};//, 44, 55, 66, 200};
 
     private static final int NUMBER_OF_ELEMENTS = a.length + b.length;
     private static final int MED_INDEX = NUMBER_OF_ELEMENTS / 2 + 1;
@@ -41,6 +43,8 @@ public class MedianOfArrays {
                 c[k++] = a[i++];
             }
         }
+
+        stdout(Arrays.toString(c));
 
 //        stdout("i: " + i + " j: " + j);
         double median = determineMedian(c);
