@@ -25,8 +25,17 @@ public class StringManipulations {
         findFirstNonRepeatedLetterV2();
         isPalindrome("adbda");
         reverseString("johndoeu");
-    }
 
+        runLengthEncoding("aabbbddf");
+        StringBuffer sb = new StringBuffer();
+        sb.append("In publishing and graphic design, lorem ipsum is a filler text commonly great used to filler demonstrate the graphic elements");
+        sb.append(" lorem ipsum text has been used in typesetting since the 1960s or earlier, when it was popularized by advertisements");
+        sb.append(" for Letraset transfer sheets. It was it introduced to the Information Age in the mid-1980s by Aldus Corporation, which");
+
+        shortMidpointDist(sb.toString(), "Design", "filler");
+        shortMidpointDist(sb.toString(), "and", "graphic");
+        shortMidpointDist(sb.toString(), "transfer", "it");
+    }
 
     private static void findFirstNonRepeatedLetter() {
         String s = "stress"; //prints "t"
@@ -149,5 +158,51 @@ public class StringManipulations {
 
         printTab("Reverse of " + str + " is ");
         print(new String(chars));
+    }
+
+    private static String runLengthEncoding(String input) {
+        int count = 0;
+        char [] chars = input.toCharArray();
+        char prev = chars[0];
+        StringBuilder result = new StringBuilder("");
+
+        for (char ch : chars) {
+            if (prev == ch) count++;
+            else {
+                result.append(String.valueOf(prev) + count);
+                count = 1;
+            }
+
+            prev = ch;
+        }
+
+        result.append(String.valueOf(chars[chars.length - 1]) + count);
+        stdout(result.toString());
+        return result.toString();
+    }
+
+    private static void shortMidpointDist(String document, String word1, String word2) {
+        int halfWord1 = word1.length() % 2 == 0 ? word1.length() / 2 : word1.length() / 2 + 1;
+        int halfWord2 = word2.length() % 2 == 0 ? word2.length() / 2 : word2.length() / 2 + 1;
+
+        String[] words = document.split("[ ,]");
+        int count = 0, word1Ind = 0, word2Ind = 0;
+        int result = Integer.MAX_VALUE;
+
+        for (String word : words) {
+          if (word.equalsIgnoreCase(word1)) {
+              word1Ind = count + halfWord1;
+          } else if (word.equalsIgnoreCase(word2)) {
+              word2Ind = count + halfWord2;
+          }
+
+          if (word1Ind > 0 && word2Ind > 0) {
+            result = Math.min(result, Math.abs(word1Ind - word2Ind));
+          }
+
+          count += word.length() + 1;
+        }
+
+        stdout("Min distance = " + result);
     }
 }
